@@ -1,18 +1,18 @@
 @page "/MoneyCard"
 
 @if(value > 0){
-    <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+    <div class="card border-success mb-3" style="max-width: 18rem;">
     <div class="card-header">@title</div>
-    <div class="card-body">
+    <div class="card-body text-success">
         <h5 class="card-title">@value</h5>
         <p class="card-text">@text</p>
     </div>
     </div>
 }
 else{
-    <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+    <div class="card border-danger mb-3" style="max-width: 18rem;">
     <div class="card-header">@title</div>
-    <div class="card-body">
+    <div class="card-body text-danger">
         <h5 class="card-title">@value</h5>
         <p class="card-text">@text</p>
     </div>

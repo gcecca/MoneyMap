@@ -5,41 +5,54 @@
 <NavLink class="nav-link" href="Cash_Flow_Add">
     <span class="oi oi-plus" aria-hidden="true"></span> Add Transaction
 </NavLink>
-@if(Categories is null || cFlow is null)
+@if(Months is null || cFlow is null)
 {
     <p><em>Loading..</em></p>
 }
 else
 {   
     <div class="row">
-        <div class = "col-md-4">
+        <div class = "col-md-2">
             <div class="form-group">
-            <label clas="control-label">Category</label>
-            <select @bind="catProperty" class=" form-control ">
+                <label clas="control-label">Category</label>
+                <select @bind="catProperty" class=" form-control ">
 
-                <option value="All">All</option>
-                @foreach (var c in Categories)
-                {
-                    <option value="@c"> @c  </option>
-                }
+                    <option value="All">All</option>
+                    @foreach (var c in Categories)
+                    {
+                        <option value="@c"> @c  </option>
+                    }
 
-            </select>
+                </select>
             </div>
+        </div>
+        <div class="col-md-2">
             <div class="form-group">
-            <label clas="control-label">Month</label>
-            <select @bind="monthProperty" class=" form-control ">
+                <label clas="control-label">Month</label>
+                <select @bind="monthProperty" class=" form-control ">
 
-                <option value="0">All</option>
-                @foreach (var m in Months)
-                {
-                    <option value="@m"> @m </option>
-                }
+                    <option value="0">All</option>
+                    @foreach (var m in Months)
+                    {
+                        <option value="@m"> @m </option>
+                    }
 
-            </select>
+                </select>
             </div>
         </div>
     </div>
-    <MoneyCard value=@cFlow.Sum(c=>c.movement) title="Savings" text="Your total saving"/>
+    <div class="row">
+        <div class="col-md-2">
+            <MoneyCard value=@cFlow.FindAll(c => c.movement > 0).Sum(c => c.movement) title="Income" text ="Total Income" />
+        </div>
+        <div class="col-md-2">
+            <MoneyCard value=@cFlow.FindAll(c => c.movement < 0).Sum(c => c.movement) title="Expenses" text ="Total Expenses" />
+        </div>
+        <div class="col-md-2">
+            <MoneyCard value=@cFlow.Sum(c=>c.movement) title="Savings" text="Your total savings" />
+        
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-4">
             <FlowTable cash_flows="@cFlow"/>
@@ -96,7 +109,7 @@ else
             cFlow = cFlow.FindAll(c => c.description.Equals(catProperty));
 
         if(monthProperty != 0)
-                cFlow = cFlow.FindAll(c=>c.movement_date.Month==monthProperty);
+                cFlow = cFlow.FindAll(c => c.movement_date.Month == monthProperty);
 
     }
 
