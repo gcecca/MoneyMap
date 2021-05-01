@@ -1,0 +1,28 @@
+﻿@page "/"
+@using MoneyMap.Data
+@inject Cash_Flow_Service CFS
+
+<NavLink class="nav-link" href="Cash_Flow_Add">
+    <span class="oi oi-plus" aria-hidden="true"></span> Add Transaction
+</NavLink>
+@if(cFlow is null)
+{
+    <p><em>Loading..</em></p>
+}
+else
+{
+    <FlowTable cash_flows="@cFlow"/>
+}
+
+
+@code{
+
+    public List<Cash_Flow> cFlow {get;set;}
+    protected override async Task OnInitializedAsync()
+    {
+        cFlow = await Task.Run(() => CFS.GetCashFlow());
+
+    }
+
+
+}
