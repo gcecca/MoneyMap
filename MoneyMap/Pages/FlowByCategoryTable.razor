@@ -12,22 +12,24 @@ else {
 
             <thead>
                 <tr>
-                    <th>Movement</th>
                     <th>Description</th>
+                    <th>Movement</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (string k in expensesByCategory.Keys)
                 {
+
                     <tr>
+                        <td>@k</td>
                         @if(expensesByCategory[k]>0){
-                            <td class="table-success">@Math.Round(expensesByCategory[k], 2)</td>
+                            <td class="text-success">@Math.Round(expensesByCategory[k], 2)</td>
                         }
                         else {
-                        <td class="table-danger">@Math.Round(expensesByCategory[k], 2)
+                        <td class="text-danger">@Math.Round(expensesByCategory[k], 2)
                         </td>
                         }
-                        <td>@k</td>
+
                     </tr>
                 }
                 </tbody>

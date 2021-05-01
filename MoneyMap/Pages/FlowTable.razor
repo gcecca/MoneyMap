@@ -22,13 +22,14 @@ else {
                 @foreach (Cash_Flow c in cash_flows.OrderByDescending(c => c.movement_date))
                 {
                     <tr>
+                        <td>@c.description</td>
                         @if(c.movement>0){
-                            <td class="table-success">@c.movement</td>
+                            <td class="text-success">@c.movement</td>
                         }
                         else {
-                        <td class="table-danger">@c.movement</td>
+                        <td class="text-danger">@c.movement</td>
                         }
-                        <td>@c.description</td>
+                        
                         <td>
                             <a href="Cash_Flow_Edit/@c.idFlow" class="btn btn-light" 
                                  aria-disabled="true">
