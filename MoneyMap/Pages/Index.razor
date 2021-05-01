@@ -40,41 +40,48 @@ else
         </div>
     </div>
     <MoneyCard value=@cFlow.Sum(c=>c.movement) title="Savings" text="Your total saving"/>
-    <FlowTable cash_flows="@cFlow"/>
-    <FlowByCategoryTable cash_flows="@cFlow"/>
+    <div class="row">
+        <div class="col-md-4">
+            <FlowTable cash_flows="@cFlow"/>
+        </div>
+        <div class="col-md-4">
+            <FlowByCategoryTable cash_flows="@cFlow"/>
+        </div>
 
+    </div>
 }
-
 
 @code{
 
+    private List<Cash_Flow> tableCashFlow{get; set;}
     public List<Cash_Flow> cFlow {get;set;}
     public HashSet<String> Categories{get; set;} = new();
     public HashSet<int> Months{get; set;} = new();
     
-    public int month{get;set;} = 0;
+    private int month{get;set;} = 0;
     public int monthProperty{
         get{
             return month;
         }
         set{
             month = value;
-            Filter();
+            ApplyFilters();
         }
     }
-    public string category{get; set;}
+    private string category{get; set;} = "All";
     public string catProperty{
         get{
             return category;
         }
         set{
             category = value;
-            Filter();
+            ApplyFilters();
         }
     }
     protected override async Task OnInitializedAsync()
     {
-        cFlow = await Task.Run(() => CFS.GetCashFlow());
+        tableCashFlow = await Task.Run(() => CFS.GetCashFlow());
+        cFlow = tableCashFlow;
         foreach(Cash_Flow c in cFlow){
             Categories.Add(c.description);
             Months.Add(c.movement_date.Month);
@@ -82,17 +89,15 @@ else
 
     }
 
-    public void Filter(){
-        if(category == "All")
-            cFlow = CFS.GetCashFlow();
-        
-        else
-            cFlow = CFS.GetFilteredCashFlow(category);
+    public void ApplyFilters(){
+        cFlow = tableCashFlow;
+        if(category != "All")
+            @* cFlow = CFS.GetFilteredCashFlow(category); *@
+            cFlow = cFlow.FindAll(c => c.description.Equals(catProperty));
 
         if(monthProperty != 0)
                 cFlow = cFlow.FindAll(c=>c.movement_date.Month==monthProperty);
 
     }
-
 
 }

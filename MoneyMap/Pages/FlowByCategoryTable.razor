@@ -8,7 +8,7 @@
 else { 
         <h2>Expenses By Category</h2>
 
-        <table class="table" style="width:50%">
+        <table class="table">
 
             <thead>
                 <tr>
@@ -17,24 +17,21 @@ else {
                 </tr>
             </thead>
             <tbody>
-
                 @foreach (string k in expensesByCategory.Keys)
                 {
                     <tr>
                         @if(expensesByCategory[k]>0){
-                            <td class="table-success">@expensesByCategory[k]</td>
+                            <td class="table-success">@Math.Round(expensesByCategory[k], 2)</td>
                         }
                         else {
-                        <td class="table-danger">@expensesByCategory[k]</td>
+                        <td class="table-danger">@Math.Round(expensesByCategory[k], 2)
+                        </td>
                         }
                         <td>@k</td>
                     </tr>
                 }
-
                 </tbody>
-
         </table>
-
 }
 
 @code{
