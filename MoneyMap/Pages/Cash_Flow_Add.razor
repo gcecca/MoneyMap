@@ -4,7 +4,7 @@
 @inject Cash_Flow_Service CFS
 
 <h2>Add Transaction</h2>
-<EditForm Model=@cf OnInvalidSubmit ="ValidFormSubmitted" OnValidSubmit="InvalidFormSubmitted">
+<EditForm Model=@cf OnInvalidSubmit =@InvalidFormSubmitted OnValidSubmit=@ValidFormSubmitted>
     <DataAnnotationsValidator/>
     <ValidationSummary/>
     <div class="row">
@@ -44,6 +44,7 @@
     }
 
     public void InvalidFormSubmitted(EditContext context){
+
         return;
     }
     public void Cancel(){

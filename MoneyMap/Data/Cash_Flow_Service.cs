@@ -24,5 +24,21 @@ namespace MoneyMap.Data{
                 return -1;
             }
         }
+
+        public int Update(Cash_Flow c){
+            try{
+                _db.cash_flow.Update(c);
+                _db.SaveChanges();
+                return 0;
+            }
+            catch{
+                return -1;
+            }
+        }
+
+        public Cash_Flow GetCashFlowById(int id){
+            return _db.cash_flow.FirstOrDefault(c => c.idFlow == id);
+
+        }
     }
 }

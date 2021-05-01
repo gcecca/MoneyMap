@@ -1,0 +1,73 @@
+@page "/Cash_Flow_Edit/{id}"
+@using MoneyMap.Data
+@inject Cash_Flow_Service CFS
+@inject NavigationManager NM
+
+@if(c is null){<p><em>Loading...</em></p>}
+else{
+    <h2>Edit Transaction</h2>
+    if(validUpdate){
+        <div class="text-success">
+            Changes Saved
+        </div>
+    }
+    if(result == 1){
+        <div class="text-danger">
+            Update failed
+        </div>
+    }
+    <EditForm Model=@c OnInvalidSubmit =@InvalidFormSubmitted OnValidSubmit=@ValidFormSubmitted>
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
+        <div class="row">
+            <div class=" col-md-4">
+                <div class=" form-group">
+                    <label for="movement_date" class="control-label">Date</label>
+                    <input for="movement_date" class="form-control" @bind=c.movement_date />
+                </div>
+                <div class=" form-group">
+                    <label for="movement" class="control-label">Movement</label>
+                    <input for="movement" class="form-control" @bind=c.movement />
+                </div>
+                <div class=" form-group">
+                    <label for="description" class="control-label">Description</label>
+                    <input for="description" class="form-control" @bind=c.description />
+                </div>
+                <div class=" form-group">
+                    <label for="dd" class="control-label">Details</label>
+                    <input for="dd" class="form-control" @bind=c.detailed_description />
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Save">
+                    <input type="button" class="btn btn-primary" value="Back" @onclick="Cancel">
+                </div>
+
+            </div>
+        </div>
+                    
+    </EditForm>
+}
+@code{
+    [Parameter]
+    public string id{get;set;}
+    public Cash_Flow c {get; set;}
+    public bool validUpdate{get;set;}
+    public int result{get; set;} = 99;
+
+    protected override async Task OnInitializedAsync(){
+        c = await Task.Run(() => CFS.GetCashFlowById(Convert.ToInt32(id)));
+    }
+    public void ValidFormSubmitted(EditContext context){
+        validUpdate = true;
+        result = CFS.Update(c);
+    }
+
+    public void InvalidFormSubmitted(EditContext context){
+        validUpdate = false;
+        return;
+    }
+
+    public void Cancel(){
+        NM.NavigateTo("/");
+    }
+}

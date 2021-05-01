@@ -50,7 +50,6 @@ else
         </div>
         <div class="col-md-2">
             <MoneyCard value=@cFlow.Sum(c=>c.movement) title="Savings" text="Your total savings" />
-        
         </div>
     </div>
     <div class="row">
@@ -112,5 +111,4 @@ else
                 cFlow = cFlow.FindAll(c => c.movement_date.Month == monthProperty);
 
     }
-
 }

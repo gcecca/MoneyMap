@@ -14,6 +14,7 @@ else {
                 <tr>
                     <th>Movement</th>
                     <th>Description</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,13 @@ else {
                         <td class="table-danger">@c.movement</td>
                         }
                         <td>@c.description</td>
+                        <td>
+                            <a href="Cash_Flow_Edit/@c.idFlow" class="btn btn-light" 
+                                 aria-disabled="true">
+                                    <span class="oi oi-pencil" aria-hidden="true">
+                                    </span>
+                            </a>
+                        </td>
                     </tr>
                 }
 
