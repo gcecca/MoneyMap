@@ -1,0 +1,61 @@
+@page "/FlowByCategory"
+@using MoneyMap.Data;
+@inject Cash_Flow_Service CFS;
+
+@if(expensesByCategory is null){
+    <em>Loading..</em>
+}
+else { 
+        <h2>Expenses By Category</h2>
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Movement</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (string k in expensesByCategory.Keys)
+                {
+                    <tr>
+                        @if(expensesByCategory[k]>0){
+                            <td class="table-success">@expensesByCategory[k]</td>
+                        }
+                        else {
+                        <td class="table-danger">@expensesByCategory[k]</td>
+                        }
+                        <td>@k</td>
+                    </tr>
+                }
+
+                </tbody>
+
+        </table>
+
+}
+
+@code{
+    [Parameter]
+    public List<Cash_Flow> cash_flows{get;set;}
+    public Dictionary<string, float> expensesByCategory{get; set;}
+
+    protected override async Task OnInitializedAsync(){
+        expensesByCategory = await Task.Run(() => GetExpensesByCategory());
+    }
+
+    public Dictionary<string, float> GetExpensesByCategory(){
+        Dictionary<string, float>ebc = new();
+        foreach(Cash_Flow c in cash_flows){
+            if(ebc.ContainsKey(c.description))
+                ebc[c.description] += c.movement;
+            
+            else{
+                ebc.Add(c.description, c.movement);
+            }
+        }
+        return ebc;
+    }
+}
