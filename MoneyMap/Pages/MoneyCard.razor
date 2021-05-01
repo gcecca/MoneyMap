@@ -1,0 +1,32 @@
+@page "/MoneyCard"
+
+@if(value > 0){
+    <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+    <div class="card-header">@title</div>
+    <div class="card-body">
+        <h5 class="card-title">@value</h5>
+        <p class="card-text">@text</p>
+    </div>
+    </div>
+}
+else{
+    <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+    <div class="card-header">@title</div>
+    <div class="card-body">
+        <h5 class="card-title">@value</h5>
+        <p class="card-text">@text</p>
+    </div>
+    </div>
+}
+
+
+
+@code{
+    [Parameter]
+    public float value{get;set;}
+    [Parameter]
+    public string title{get; set;}
+
+    [Parameter]
+    public string text{get; set;}
+}
