@@ -1,5 +1,6 @@
 @page "/FlowByCategory"
 @using MoneyMap.Data;
+@using MudBlazor
 @inject Cash_Flow_Service CFS;
 
 @if(expensesByCategory is null){
@@ -9,7 +10,12 @@
 }
 else { 
         <h7>FLOW BY CATEGORY</h7>
-
+            <MudLink Href="Net_Worth_add">
+                
+                <MudTooltip Text="Add Net Worth">
+                    <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Small" Class="ma-2" />
+                </MudTooltip>
+            </MudLink>
         <table class="table">
 
             <thead>

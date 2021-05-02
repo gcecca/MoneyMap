@@ -1,13 +1,8 @@
 ﻿@page "/"
 @using MoneyMap.Data
+@using MudBlazor
 @inject Cash_Flow_Service CFS
 
-<NavLink class="nav-link" href="Cash_Flow_Add">
-        <span class="oi oi-plus" aria-hidden="true"></span>Add Transaction
-</NavLink>
-<NavLink class="nav-link" href="Net_Worth_Add">
-    <span class="oi oi-plus" aria-hidden="true"></span> Add Net Worth
-</NavLink>
 
 @if(!initialized)
 {
@@ -18,34 +13,29 @@
 }
 else
 {   
-
     <div class="row">
         <div class="col-md-2">
             <div class="form-group">
-                <label clas="control-label">Category</label>
-                <select @bind="catProperty" class=" form-control ">
-
-                    <option value="All">All</option>
-                    @foreach (var c in Categories)
+                <MudSelect T="string" Label="Category" @bind-Value=@catProperty>
+                    <MudSelectItem Value="@("All")" />
+                        @foreach (var c in Categories)
                     {
-                        <option value="@c"> @c  </option>
+                        <MudSelectItem Value="@c" />
                     }
+                </MudSelect>
 
-                </select>
             </div>
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                <label clas="control-label">Month</label>
-                <select @bind="monthProperty" class=" form-control ">
+                <MudSelect T="int" Label="Month" @bind-Value=@monthProperty>
+                    <MudSelectItem Value="0" > All </MudSelectItem>
+                        @foreach (var m in Months)
+                        {
+                        <MudSelectItem Value="@m" />
+                        }
+                </MudSelect>
 
-                    <option value="0">All</option>
-                    @foreach (var m in Months)
-                    {
-                        <option value="@m"> @m </option>
-                    }
-
-                </select>
             </div>
         </div>
     </div>
@@ -64,7 +54,6 @@ else
 
         <div class="col-md-4">
             <FlowTable cash_flows="@cFlow"/>
-        
         </div>
         <div class="col-md-4">
             <FlowByCategoryTable cash_flows="@cFlow"/>
@@ -78,7 +67,7 @@ else
     public List<Cash_Flow> cFlow {get;set;}
     public HashSet<String> Categories = new();
     public HashSet<int> Months = new();
-    public Dictionary<string, double> cfMap = new();
+    public Dictionary<string, double> inMap = new();
     public bool initialized { get; set; } = false;
 
 
@@ -110,10 +99,10 @@ else
             Categories.Add(c.description);
             Months.Add(c.movement_date.Month);
             if (c.movement > 0) {
-                if(!cfMap.ContainsKey(c.description))
-                    cfMap.Add(c.description, Convert.ToDouble(c.movement));
+                if(!inMap.ContainsKey(c.description))
+                    inMap.Add(c.description, Convert.ToDouble(c.movement));
                 else
-                    cfMap[c.description] += c.movement;
+                    inMap[c.description] += c.movement;
             }
         }
         initialized = true;
