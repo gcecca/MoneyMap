@@ -3,7 +3,10 @@
 @inject Cash_Flow_Service CFS;
 
 @if(cash_flows is null){
-    <em>Loading..</em>
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>      
+
 }
 else { 
         <h7>LATEST TRANSACTIONS</h7>

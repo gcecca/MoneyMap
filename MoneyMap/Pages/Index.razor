@@ -3,7 +3,7 @@
 @inject Cash_Flow_Service CFS
 
 <NavLink class="nav-link" href="Cash_Flow_Add">
-    <span class="oi oi-plus" aria-hidden="true"></span> Add Transaction
+        <span class="oi oi-plus" aria-hidden="true"></span>Add Transaction
 </NavLink>
 <NavLink class="nav-link" href="Net_Worth_Add">
     <span class="oi oi-plus" aria-hidden="true"></span> Add Net Worth
@@ -11,7 +11,10 @@
 
 @if(Months is null || cFlow is null)
 {
-    <p><em>Loading..</em></p>
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>      
+
 }
 else
 {   
