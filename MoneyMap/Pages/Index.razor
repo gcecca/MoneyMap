@@ -9,7 +9,7 @@
     <span class="oi oi-plus" aria-hidden="true"></span> Add Net Worth
 </NavLink>
 
-@if(Months is null || cFlow is null)
+@if(!initialized)
 {
     <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
@@ -18,8 +18,9 @@
 }
 else
 {   
+
     <div class="row">
-        <div class = "col-md-2">
+        <div class="col-md-2">
             <div class="form-group">
                 <label clas="control-label">Category</label>
                 <select @bind="catProperty" class=" form-control ">
@@ -75,10 +76,12 @@ else
 
     private List<Cash_Flow> tableCashFlow{get; set;}
     public List<Cash_Flow> cFlow {get;set;}
-    public HashSet<String> Categories{get; set;} = new();
-    public HashSet<int> Months{get; set;} = new();
+    public HashSet<String> Categories = new();
+    public HashSet<int> Months = new();
+    public Dictionary<string, double> cfMap = new();
+    public bool initialized { get; set; } = false;
 
-    
+
     private int month{get;set;} = 0;
     public int monthProperty{
         get{
@@ -106,7 +109,14 @@ else
         foreach(Cash_Flow c in cFlow){
             Categories.Add(c.description);
             Months.Add(c.movement_date.Month);
+            if (c.movement > 0) {
+                if(!cfMap.ContainsKey(c.description))
+                    cfMap.Add(c.description, Convert.ToDouble(c.movement));
+                else
+                    cfMap[c.description] += c.movement;
+            }
         }
+        initialized = true;
 
     }
 

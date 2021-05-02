@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MudBlazor.Services;
 
 
 
@@ -31,6 +32,7 @@ namespace MoneyMap
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddMudServices();
             services.AddScoped<Cash_Flow_Service>();
             services.AddScoped<Net_Worth_Service>();
             services.AddDbContext<ApplicationDbContext>(options =>
