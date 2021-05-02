@@ -13,6 +13,7 @@ namespace MoneyMap.Data
         { }
 
         public DbSet<Cash_Flow> cash_flow{get;set;}
+        public DbSet<Net_Worth> money_map{get;set;}
     }
 
 }

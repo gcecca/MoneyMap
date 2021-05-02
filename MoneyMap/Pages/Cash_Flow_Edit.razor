@@ -6,12 +6,12 @@
 @if(c is null){<p><em>Loading...</em></p>}
 else{
     <h2>Edit Transaction</h2>
-    if(validUpdate){
+    @if(result == 0){
         <div class="text-success">
             Changes Saved
         </div>
     }
-    if(result == 1){
+    @if(result != 0 && result != 99){
         <div class="text-danger">
             Update failed
         </div>

@@ -32,6 +32,7 @@ namespace MoneyMap
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<Cash_Flow_Service>();
+            services.AddScoped<Net_Worth_Service>();
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
         }

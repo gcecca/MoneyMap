@@ -14,12 +14,16 @@ else {
                 <tr>
                     <th>        
                         <button class="btn btn-light btn-sm"@onclick=@(()=>detailedView=!detailedView)>
-                        @if(detailedView) {<span class="oi oi-minus" aria-hidden="true"></span>}
-                        else{<span class="oi oi-plus" aria-hidden="true"></span>}
+                        @if(detailedView) {
+                            <span class="oi oi-minus" aria-hidden="true"></span>
+                        }
+                        else{
+                            <span class="oi oi-plus" aria-hidden="true"></span>
+                        }
                         </button>
                     </th>
-                    <th>Movement</th>
                     <th>Description</th>
+                    <th>Movement</th>
                     @if(detailedView){
                         <th>TS</th>
                         <th>Details</th>

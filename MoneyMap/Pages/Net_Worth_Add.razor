@@ -1,9 +1,10 @@
-@page "/Cash_Flow_Add"
+@page "/Net_Worth_Add"
 @using MoneyMap.Data;
 @inject NavigationManager NM;
-@inject Cash_Flow_Service CFS
+@inject Net_Worth_Service NWS
 
-<h2>Add Transaction</h2>
+<h2>Add Net Worth</h2>
+
     @if(result == 0){
         <div class="text-success">
             Changes Saved
@@ -15,26 +16,18 @@
         </div>
     }
 
-<EditForm Model=@cf OnInvalidSubmit =@InvalidFormSubmitted OnValidSubmit=@ValidFormSubmitted>
+<EditForm Model=@nw OnInvalidSubmit =@InvalidFormSubmitted OnValidSubmit=@ValidFormSubmitted>
     <DataAnnotationsValidator/>
     <ValidationSummary/>
     <div class="row">
         <div class=" col-md-4">
             <div class=" form-group">
-                <label for="movement_date" class="control-label">Date</label>
-                <input for="movement_date" class="form-control" @bind=cf.movement_date />
+                <label for="date" class="control-label">Date</label>
+                <input for="date" class="form-control" @bind=nw.value_date />
             </div>
             <div class=" form-group">
-                <label for="movement" class="control-label">Movement</label>
-                <input for="movement" class="form-control" @bind=cf.movement />
-            </div>
-            <div class=" form-group">
-                <label for="description" class="control-label">Description</label>
-                <input for="description" class="form-control" @bind=cf.description />
-            </div>
-            <div class=" form-group">
-                <label for="dd" class="control-label">Details</label>
-                <input for="dd" class="form-control" @bind=cf.detailed_description />
+                <label for="net worth" class="control-label">Net Worth</label>
+                <input for="net worth" class="form-control" @bind=nw.money/>
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Save">
@@ -46,11 +39,11 @@
 </EditForm>
 
 @code{
-    public Cash_Flow cf = new();
+    public Net_Worth nw = new();
     public int result{get; set;} = 99;
 
     public void ValidFormSubmitted(EditContext context){
-        result = CFS.Create(cf);
+        result = NWS.Create(nw);
     }
 
     public void InvalidFormSubmitted(EditContext context){
