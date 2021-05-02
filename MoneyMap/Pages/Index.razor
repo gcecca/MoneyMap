@@ -53,13 +53,14 @@ else
         </div>
     </div>
     <div class="row">
+
         <div class="col-md-4">
             <FlowTable cash_flows="@cFlow"/>
+        
         </div>
         <div class="col-md-4">
             <FlowByCategoryTable cash_flows="@cFlow"/>
         </div>
-
     </div>
 }
 
@@ -69,6 +70,7 @@ else
     public List<Cash_Flow> cFlow {get;set;}
     public HashSet<String> Categories{get; set;} = new();
     public HashSet<int> Months{get; set;} = new();
+
     
     private int month{get;set;} = 0;
     public int monthProperty{

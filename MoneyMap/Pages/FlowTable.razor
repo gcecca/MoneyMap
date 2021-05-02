@@ -6,15 +6,25 @@
     <em>Loading..</em>
 }
 else { 
-        <h2>Latest Transactions</h2>
+        <h7>LATEST TRANSACTIONS</h7>
 
         <table class="table">
 
             <thead>
                 <tr>
+                    <th>        
+                        <button class="btn btn-light btn-sm"@onclick=@(()=>detailedView=!detailedView)>
+                        @if(detailedView) {<span class="oi oi-minus" aria-hidden="true"></span>}
+                        else{<span class="oi oi-plus" aria-hidden="true"></span>}
+                        </button>
+                    </th>
                     <th>Movement</th>
                     <th>Description</th>
-                    <th></th>
+                    @if(detailedView){
+                        <th>TS</th>
+                        <th>Details</th>
+                    }
+                    
                 </tr>
             </thead>
             <tbody>
@@ -22,6 +32,12 @@ else {
                 @foreach (Cash_Flow c in cash_flows.OrderByDescending(c => c.movement_date))
                 {
                     <tr>
+                        <td>
+                            <a href="Cash_Flow_Edit/@c.idFlow" class="btn btn-light btn-sm" 
+                                 aria-disabled="true">
+                                    <span class="oi oi-pencil" aria-hidden="true"></span>
+                            </a>
+                        </td>
                         <td>@c.description</td>
                         @if(c.movement>0){
                             <td class="text-success">@c.movement</td>
@@ -29,14 +45,10 @@ else {
                         else {
                         <td class="text-danger">@c.movement</td>
                         }
-                        
-                        <td>
-                            <a href="Cash_Flow_Edit/@c.idFlow" class="btn btn-light" 
-                                 aria-disabled="true">
-                                    <span class="oi oi-pencil" aria-hidden="true">
-                                    </span>
-                            </a>
-                        </td>
+                        @if(detailedView){
+                            <td>@c.movement_date</td>
+                            <td>@c.detailed_description</td>
+                        }
                     </tr>
                 }
 
@@ -48,4 +60,7 @@ else {
 @code{
     [Parameter]
     public List<Cash_Flow> cash_flows{get;set;}
+    
+    [Parameter]
+     public bool detailedView {get; set;} = false;
 }
