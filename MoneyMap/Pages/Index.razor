@@ -39,26 +39,31 @@ else
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-2">
-            <MoneyCard value=@cFlow.FindAll(c => c.movement > 0).Sum(c => c.movement) title="Income" text ="Total Income" />
-        </div>
-        <div class="col-md-2">
-            <MoneyCard value=@cFlow.FindAll(c => c.movement < 0).Sum(c => c.movement) title="Expenses" text ="Total Expenses" />
-        </div>
-        <div class="col-md-2">
-            <MoneyCard value=@cFlow.Sum(c=>c.movement) title="Savings" text="Your total savings" />
-        </div>
-    </div>
-    <div class="row">
 
-        <div class="col-md-6">
+    <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+            <MudTabPanel Text="Recent Transactions">
             <FlowTable cash_flows="@cFlow"/>
-        </div>
-        <div class="col-md-4">
+
+        </MudTabPanel>
+        <MudTabPanel Text="Expenses By Category">
+
             <FlowByCategoryTable cash_flows="@cFlow"/>
-        </div>
-    </div>
+            
+        </MudTabPanel>
+        <MudTabPanel Text="Cash Flow">
+            <div class="row">
+                <div class="col-md-2">
+                    <MoneyCard value=@cFlow.FindAll(c => c.movement > 0).Sum(c => c.movement) title="Income" text ="Total Income" />
+                </div>
+                <div class="col-md-2">
+                    <MoneyCard value=@cFlow.FindAll(c => c.movement < 0).Sum(c => c.movement) title="Expenses" text ="Total Expenses" />
+                </div>
+                <div class="col-md-2">
+                    <MoneyCard value=@cFlow.Sum(c=>c.movement) title="Savings" text="Your total savings" />
+                </div>
+            </div>
+        </MudTabPanel>
+    </MudTabs>
 }
 
 @code{
@@ -112,11 +117,9 @@ else
     public void ApplyFilters(){
         cFlow = tableCashFlow;
         if(category != "All")
-            
             cFlow = cFlow.FindAll(c => c.description.Equals(catProperty));
 
         if(monthProperty != 0)
-                cFlow = cFlow.FindAll(c => c.movement_date.Month == monthProperty);
-
+            cFlow = cFlow.FindAll(c => c.movement_date.Month == monthProperty);
     }
 }

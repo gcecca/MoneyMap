@@ -9,14 +9,15 @@
     </div>      
 }
 else { 
-        <h7>FLOW BY CATEGORY</h7>
-            <MudLink Href="Net_Worth_add">
-                
-                <MudTooltip Text="Add Net Worth">
-                    @* <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Small" Class="ma-2" /> *@
-                    <MudIconButton Icon="@Icons.Material.Outlined.Add" Link="Net_Worth_add" />
-                </MudTooltip>
-            </MudLink>
+    <h7>FLOW BY CATEGORY</h7>
+    <MudLink Href="Net_Worth_add">
+        
+        <MudTooltip Text="Add Net Worth">
+            @* <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Small" Class="ma-2" /> *@
+            <MudIconButton Icon="@Icons.Material.Outlined.Add" Link="Net_Worth_add" />
+        </MudTooltip>
+    </MudLink>
+    <div class="col-md-6">
         <table class="table">
 
             <thead>
@@ -42,6 +43,7 @@ else {
                 }
                 </tbody>
         </table>
+    </div>
 }
 
 @code{

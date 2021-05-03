@@ -11,22 +11,21 @@
 
 }
 else { 
-        <h7>LATEST TRANSACTIONS</h7>
-            <MudLink Href="Cash_Flow_Add">
-                <MudTooltip Text="Add Transaction">
-                    <MudIconButton Icon="@Icons.Material.Outlined.Add" Link="Net_Worth_add" />
-                </MudTooltip>
-            </MudLink>
-            <MudTooltip Text="View Details">
-                <MudIconButton Icon="@Icons.Material.Outlined.Menu" 
-                    @onclick=@(()=>detailedView=!detailedView) Color="Color.Inherit" Class="mr-5" />
-            </MudTooltip>
+    <h7>LATEST TRANSACTIONS</h7>
+    <MudLink Href="Cash_Flow_Add">
+        <MudTooltip Text="Add Transaction">
+            <MudIconButton Icon="@Icons.Material.Outlined.Add" Link="Net_Worth_add" />
+        </MudTooltip>
+    </MudLink>
+    <MudTooltip Text="View Details">
+        <MudIconButton Icon="@Icons.Material.Outlined.Menu" 
+            @onclick=@(()=>detailedView=!detailedView) Color="Color.Inherit" Class="mr-5" />
+    </MudTooltip>
 
+    <div class="col-md-6">
         <table class="table">
-
             <thead>
                 <tr>
-                    
                     <th>Description</th>
                     <th>Movement</th>
                     @if(detailedView){
@@ -63,10 +62,9 @@ else {
                         </td>
                     </tr>
                 }
-
                 </tbody>
         </table>
-
+    </div>
 }
 
 @code{
