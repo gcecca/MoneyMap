@@ -52,7 +52,7 @@ else
     </div>
     <div class="row">
 
-        <div class="col-md-4">
+        <div class="col-md-6">
             <FlowTable cash_flows="@cFlow"/>
         </div>
         <div class="col-md-4">
@@ -112,7 +112,7 @@ else
     public void ApplyFilters(){
         cFlow = tableCashFlow;
         if(category != "All")
-            @* cFlow = CFS.GetFilteredCashFlow(category); *@
+            
             cFlow = cFlow.FindAll(c => c.description.Equals(catProperty));
 
         if(monthProperty != 0)

@@ -14,32 +14,27 @@ else {
         <h7>LATEST TRANSACTIONS</h7>
             <MudLink Href="Cash_Flow_Add">
                 <MudTooltip Text="Add Transaction">
-                    <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Small" Class="ma-2" />
+                    <MudIconButton Icon="@Icons.Material.Outlined.Add" Link="Net_Worth_add" />
                 </MudTooltip>
             </MudLink>
+            <MudTooltip Text="View Details">
+                <MudIconButton Icon="@Icons.Material.Outlined.Menu" 
+                    @onclick=@(()=>detailedView=!detailedView) Color="Color.Inherit" Class="mr-5" />
+            </MudTooltip>
+
         <table class="table">
 
             <thead>
                 <tr>
-                    <th>        
-                        <button class="btn btn-light btn-sm"@onclick=@(()=>detailedView=!detailedView)>
-                        @if(detailedView) {
-                            <span class="oi oi-minus" aria-hidden="true"></span>
-                            @* <MudIconButton Icon="far fa-angle-right" Color="Color.Dark"></MudIconButton> *@
-                        }
-                        else{
-                            <span class="oi oi-plus" aria-hidden="true"></span>
-                            @* <MudIconButton Icon="far fa-angle-left" Color="Color.Dark"></MudIconButton> *@
-                        }
-                        </button>
-                    </th>
+                    
                     <th>Description</th>
                     <th>Movement</th>
                     @if(detailedView){
                         <th>TS</th>
                         <th>Details</th>
                     }
-                    
+                    <th>        
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -47,15 +42,7 @@ else {
                 @foreach (Cash_Flow c in cash_flows.OrderByDescending(c => c.movement_date))
                 {
                     <tr>
-                        <td>
-                            <a href="Cash_Flow_Edit/@c.idFlow" class="btn btn-light btn-sm" 
-                                 aria-disabled="true">
-                                    <span class="oi oi-pencil" aria-hidden="true"></span>
-                            </a>
-                            @* <a href="Cash_Flow_Edit/@c.idFlow" >
-                                <MudIconButton Icon="@Icons.Material.Outlined.Edit"/>
-                           </a> *@
-                        </td>
+                            
                         <td>@c.description</td>
                         @if(c.movement>0){
                             <td class="text-success">@c.movement</td>
@@ -67,6 +54,13 @@ else {
                             <td>@c.movement_date</td>
                             <td>@c.detailed_description</td>
                         }
+                        <td>
+                                @if(detailedView){
+                                <a href="Cash_Flow_Edit/@c.idFlow" >
+                                    <MudIconButton Icon="@Icons.Material.Outlined.Edit"/>
+                                </a> 
+                                }
+                        </td>
                     </tr>
                 }
 
