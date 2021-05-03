@@ -14,6 +14,7 @@ else {
                 
                 <MudTooltip Text="Add Net Worth">
                     <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Small" Class="ma-2" />
+                    @* <MudIconButton Icon="@Icons.Material.Outlined.Add" Link="Net_Worth_add" /> *@
                 </MudTooltip>
             </MudLink>
         <table class="table">
@@ -34,8 +35,7 @@ else {
                             <td class="text-success">@Math.Round(expensesByCategory[k], 2)</td>
                         }
                         else {
-                        <td class="text-danger">@Math.Round(expensesByCategory[k], 2)
-                        </td>
+                        <td class="text-danger">@Math.Round(expensesByCategory[k], 2)</td>
                         }
 
                     </tr>
