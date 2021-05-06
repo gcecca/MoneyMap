@@ -1,5 +1,6 @@
 @page "/Cash_Flow_Edit/{id}"
 @using MoneyMap.Data
+@using MudBlazor
 @inject Cash_Flow_Service CFS
 @inject NavigationManager NM
 
@@ -21,27 +22,30 @@ else{
         <ValidationSummary/>
         <div class="row">
             <div class=" col-md-4">
-                <div class=" form-group">
-                    <label for="movement_date" class="control-label">Date</label>
-                    <input for="movement_date" class="form-control" @bind=c.movement_date />
-                </div>
-                <div class=" form-group">
-                    <label for="movement" class="control-label">Movement</label>
-                    <input for="movement" class="form-control" @bind=c.movement />
-                </div>
-                <div class=" form-group">
-                    <label for="description" class="control-label">Description</label>
-                    <input for="description" class="form-control" @bind=c.description />
-                </div>
-                <div class=" form-group">
-                    <label for="dd" class="control-label">Details</label>
-                    <input for="dd" class="form-control" @bind=c.detailed_description />
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary" value="Save">
-                    <input type="button" class="btn btn-primary" value="Back" @onclick="Cancel">
-                </div>
-
+                <MudCard>
+                    <MudCardContent>
+                        <div class=" form-group">
+                            <label for="movement_date" class="control-label">Date</label>
+                            <input for="movement_date" class="form-control" @bind=c.movement_date />
+                        </div>
+                        <div class=" form-group">
+                            <label for="movement" class="control-label">Movement</label>
+                            <input for="movement" class="form-control" @bind=c.movement />
+                        </div>
+                        <div class=" form-group">
+                            <label for="description" class="control-label">Description</label>
+                            <input for="description" class="form-control" @bind=c.description />
+                        </div>
+                        <div class=" form-group">
+                            <label for="dd" class="control-label">Details</label>
+                            <input for="dd" class="form-control" @bind=c.detailed_description />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="Save">
+                            <input type="button" class="btn btn-primary" value="Back" @onclick="Cancel">
+                        </div>
+                    </MudCardContent>   
+                </MudCard>    
             </div>
         </div>
                     

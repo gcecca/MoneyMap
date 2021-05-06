@@ -1,5 +1,6 @@
 @page "/Cash_Flow_Add"
 @using MoneyMap.Data;
+@using MudBlazor;
 @inject NavigationManager NM;
 @inject Cash_Flow_Service CFS
 
@@ -18,31 +19,37 @@
 <EditForm Model=@cf OnInvalidSubmit =@InvalidFormSubmitted OnValidSubmit=@ValidFormSubmitted>
     <DataAnnotationsValidator/>
     <ValidationSummary/>
-    <div class="row">
-        <div class=" col-md-4">
-            <div class=" form-group">
-                <label for="movement_date" class="control-label">Date</label>
-                <input for="movement_date" class="form-control" @bind=cf.movement_date />
-            </div>
-            <div class=" form-group">
-                <label for="movement" class="control-label">Movement</label>
-                <input for="movement" class="form-control" @bind=cf.movement />
-            </div>
-            <div class=" form-group">
-                <label for="description" class="control-label">Description</label>
-                <input for="description" class="form-control" @bind=cf.description />
-            </div>
-            <div class=" form-group">
-                <label for="dd" class="control-label">Details</label>
-                <input for="dd" class="form-control" @bind=cf.detailed_description />
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Save">
-                <input type="button" class="btn btn-primary" value="Back" @onclick="Cancel">
+
+        <div class="row">
+            <div class=" col-md-4">
+                <MudCard>
+                    <MudCardContent>
+                        <div class=" form-group">
+                            <label for="movement_date" class="control-label">Date</label>
+                            <input for="movement_date" class="form-control" @bind=cf.movement_date />
+                        </div>
+                        <div class=" form-group">
+                            <label for="movement" class="control-label">Movement</label>
+                            <input for="movement" class="form-control" @bind=cf.movement />
+                        </div>
+                        <div class=" form-group">
+                            <label for="description" class="control-label">Description</label>
+                            <input for="description" class="form-control" @bind=cf.description />
+                        </div>
+                        <div class=" form-group">
+                            <label for="dd" class="control-label">Details</label>
+                            <input for="dd" class="form-control" @bind=cf.detailed_description />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="Save">
+                            <input type="button" class="btn btn-primary" value="Back" @onclick="Cancel">
+                        </div>
+                    </MudCardContent>   
+                </MudCard>    
             </div>
         </div>
-    </div>
-                
+
+    
 </EditForm>
 
 @code{

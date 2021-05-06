@@ -12,58 +12,54 @@
 
 }
 else
-{   
-    <div class="row">
-        <div class="col-md-2">
-            <div class="form-group">
+{   <div class="col-md-4">
+        <MudCard>
+            <MudCardContent>
                 <MudSelect T="string" Label="Category" @bind-Value=@catProperty>
                     <MudSelectItem Value="@("All")" />
                         @foreach (var c in Categories)
-                    {
-                        <MudSelectItem Value="@c" />
-                    }
+                        {
+                            <MudSelectItem Value="@c" />
+                        }
                 </MudSelect>
 
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="form-group">
                 <MudSelect T="int" Label="Month" @bind-Value=@monthProperty>
                     <MudSelectItem Value="0" > All </MudSelectItem>
                         @foreach (var m in Months)
                         {
-                        <MudSelectItem Value="@m" />
+                            <MudSelectItem Value="@m" />
                         }
                 </MudSelect>
-
-            </div>
-        </div>
+            </MudCardContent>
+        </MudCard>    
     </div>
+    <div style ="min-height:25px"/>
+    <div class="justify-content-center">
+        <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" Style="overflow:scroll">
+            <MudTabPanel Text="Transactions">
+                <FlowTable cash_flows="@cFlow"/>
 
-    <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
-            <MudTabPanel Text="Recent Transactions">
-            <FlowTable cash_flows="@cFlow"/>
+            </MudTabPanel>
+            <MudTabPanel Text="By Category">
 
-        </MudTabPanel>
-        <MudTabPanel Text="Expenses By Category">
-
-            <FlowByCategoryTable cash_flows="@cFlow"/>
-            
-        </MudTabPanel>
-        <MudTabPanel Text="Cash Flow">
-            <div class="row">
-                <div class="col-md-2">
-                    <MoneyCard value=@cFlow.FindAll(c => c.movement > 0).Sum(c => c.movement) title="Income" text ="Total Income" />
+                <FlowByCategoryTable expensesByCategory="@inMap"/>
+                
+            </MudTabPanel>
+            <MudTabPanel Text="Flow">
+                <div class="row">
+                    <div class="col-md-2">
+                        <MoneyCard value=@cFlow.FindAll(c => c.movement > 0).Sum(c => c.movement) title="Income" text ="Total Income" />
+                    </div>
+                    <div class="col-md-2">
+                        <MoneyCard value=@cFlow.FindAll(c => c.movement < 0).Sum(c => c.movement) title="Expenses" text ="Total Expenses" />
+                    </div>
+                    <div class="col-md-2">
+                        <MoneyCard value=@cFlow.Sum(c=>c.movement) title="Savings" text="Your total savings" />
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <MoneyCard value=@cFlow.FindAll(c => c.movement < 0).Sum(c => c.movement) title="Expenses" text ="Total Expenses" />
-                </div>
-                <div class="col-md-2">
-                    <MoneyCard value=@cFlow.Sum(c=>c.movement) title="Savings" text="Your total savings" />
-                </div>
-            </div>
-        </MudTabPanel>
-    </MudTabs>
+            </MudTabPanel>
+        </MudTabs>
+    </div>
 }
 
 @code{
@@ -72,7 +68,7 @@ else
     public List<Cash_Flow> cFlow {get;set;}
     public HashSet<String> Categories = new();
     public HashSet<int> Months = new();
-    public Dictionary<string, double> inMap = new();
+    public Dictionary<string, float> inMap {get; set;}
     public bool initialized { get; set; } = false;
 
 
@@ -98,22 +94,27 @@ else
     }
     protected override async Task OnInitializedAsync()
     {
+        initialized = false;
         tableCashFlow = await Task.Run(() => CFS.GetCashFlow());
         cFlow = tableCashFlow;
-        foreach(Cash_Flow c in cFlow){
-            Categories.Add(c.description);
-            Months.Add(c.movement_date.Month);
-            if (c.movement > 0) {
-                if(!inMap.ContainsKey(c.description))
-                    inMap.Add(c.description, Convert.ToDouble(c.movement));
-                else
-                    inMap[c.description] += c.movement;
-            }
-        }
+        InitiazeExpenses();
         initialized = true;
 
     }
 
+    public void InitiazeExpenses(){
+        inMap = new();
+        foreach(Cash_Flow c in cFlow){
+            Categories.Add(c.description);
+            Months.Add(c.movement_date.Month);
+            
+            if(!inMap.ContainsKey(c.description))
+                inMap.Add(c.description, c.movement);
+            else
+                inMap[c.description] += c.movement;
+
+        }
+    }
     public void ApplyFilters(){
         cFlow = tableCashFlow;
         if(category != "All")
@@ -121,5 +122,6 @@ else
 
         if(monthProperty != 0)
             cFlow = cFlow.FindAll(c => c.movement_date.Month == monthProperty);
+        InitiazeExpenses();
     }
 }

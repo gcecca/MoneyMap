@@ -1,24 +1,34 @@
 ﻿@inherits LayoutComponentBase
 @using MudBlazor
 
-<div class="page">
-    <MudThemeProvider/>
-    <MudDialogProvider/>
-    <MudSnackbarProvider/>
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<MudThemeProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
 
-    <div class="main">
-        <div class="top-row px-4">
-            <a href="https://github.com/gcecca/MoneyMap" target="_blank">GitHub</a>
-        </div>
 
-        <div class="content px-4">
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudAppBarSpacer />
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Link = "https://github.com/gcecca/MoneyMap" Color="Color.Inherit" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
+        <MudDrawerHeader>
+            
+        </MudDrawerHeader>
+        @*NavMenu*@
+    </MudDrawer>
+    <MudMainContent>
+
             @Body
-        </div>
-    </div>
-    <MudScrollToTop>
-        <MudFab Color="Color.Tertiary" Icon="@Icons.Filled.ArrowCircleUp" />
-    </MudScrollToTop>
-</div>
+
+    </MudMainContent>
+</MudLayout>
+@code {
+    bool _drawerOpen = true;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}

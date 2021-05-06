@@ -41,30 +41,13 @@ else {
 
                     </tr>
                 }
-                </tbody>
+            </tbody>
         </table>
     </div>
 }
 
 @code{
     [Parameter]
-    public List<Cash_Flow> cash_flows{get;set;}
     public Dictionary<string, float> expensesByCategory{get; set;}
 
-    protected override async Task OnInitializedAsync(){
-        expensesByCategory = await Task.Run(() => GetExpensesByCategory());
-    }
-
-    public Dictionary<string, float> GetExpensesByCategory(){
-        Dictionary<string, float>ebc = new();
-        foreach(Cash_Flow c in cash_flows){
-            if(ebc.ContainsKey(c.description))
-                ebc[c.description] += c.movement;
-            
-            else{
-                ebc.Add(c.description, c.movement);
-            }
-        }
-        return ebc;
-    }
 }

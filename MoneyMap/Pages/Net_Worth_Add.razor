@@ -1,5 +1,6 @@
 @page "/Net_Worth_Add"
 @using MoneyMap.Data;
+@using MudBlazor
 @inject NavigationManager NM;
 @inject Net_Worth_Service NWS
 
@@ -21,18 +22,22 @@
     <ValidationSummary/>
     <div class="row">
         <div class=" col-md-4">
-            <div class=" form-group">
-                <label for="date" class="control-label">Date</label>
-                <input for="date" class="form-control" @bind=nw.value_date />
-            </div>
-            <div class=" form-group">
-                <label for="net worth" class="control-label">Net Worth</label>
-                <input for="net worth" class="form-control" @bind=nw.money/>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Save">
-                <input type="button" class="btn btn-primary" value="Back" @onclick="Cancel">
-            </div>
+            <MudCard>
+                <MudCardContent>
+                    <div class=" form-group">
+                        <label for="date" class="control-label">Date</label>
+                        <input for="date" class="form-control" @bind=nw.value_date />
+                    </div>
+                    <div class=" form-group">
+                        <label for="net worth" class="control-label">Net Worth</label>
+                        <input for="net worth" class="form-control" @bind=nw.money/>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Save">
+                        <input type="button" class="btn btn-primary" value="Back" @onclick="Cancel">
+                    </div>
+                </MudCardContent>
+            </MudCard>
         </div>
     </div>
                 

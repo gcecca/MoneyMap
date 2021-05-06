@@ -14,7 +14,7 @@ else {
     <h7>LATEST TRANSACTIONS</h7>
     <MudLink Href="Cash_Flow_Add">
         <MudTooltip Text="Add Transaction">
-            <MudIconButton Icon="@Icons.Material.Outlined.Add" Link="Net_Worth_add" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Add" Link="Cash_Flow_add" />
         </MudTooltip>
     </MudLink>
     <MudTooltip Text="View Details">
@@ -47,7 +47,7 @@ else {
                             <td class="text-success">@c.movement</td>
                         }
                         else {
-                        <td class="text-danger">@c.movement</td>
+                            <td class="text-danger">@c.movement</td>
                         }
                         @if(detailedView){
                             <td>@c.movement_date</td>
@@ -55,9 +55,9 @@ else {
                         }
                         <td>
                                 @if(detailedView){
-                                <a href="Cash_Flow_Edit/@c.idFlow" >
-                                    <MudIconButton Icon="@Icons.Material.Outlined.Edit"/>
-                                </a> 
+                                    <a href="Cash_Flow_Edit/@c.idFlow" >
+                                        <MudIconButton Icon="@Icons.Material.Outlined.Edit"/>
+                                    </a> 
                                 }
                         </td>
                     </tr>
