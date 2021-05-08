@@ -1,19 +1,20 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">MoneyMap</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-    </ul>
-</div>
+﻿@using MudBlazor
+<MudPaper Width="250px" Class="py-3" Square="true">
+    <MudNavMenu>
+        <MudText Typo="Typo.h6" Class="px-4">Money Map</MudText>
+        @* <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Secondary Text</MudText> *@
+        <MudDivider Class="my-2"/>
+        <MudNavLink Href="/Home">Home</MudNavLink>
+        <MudNavLink Href="/dashboard">Dashboard</MudNavLink>
+        @* <MudNavLink Href="/servers">Servers</MudNavLink>
+        <MudNavLink Href="/billing" Disabled="true">Billing</MudNavLink>
+        <MudNavGroup Title="Settings" Expanded="true">
+            <MudNavLink Href="/users">Users</MudNavLink>
+            <MudNavLink Href="/security">Security</MudNavLink>
+        </MudNavGroup>
+        <MudNavLink Href="/about">About</MudNavLink> *@
+    </MudNavMenu>
+</MudPaper>
 
 @code {
     private bool collapseNavMenu = true;

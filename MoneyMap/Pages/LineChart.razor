@@ -1,0 +1,47 @@
+@page "/LineChart"
+@using MudBlazor
+@using MoneyMap.Data
+
+@if(!initialized){
+    <p>loading...</p>
+}
+else{
+    <div>
+        <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%" Height="350px"></MudChart>
+    </div>
+}
+@code {
+
+    [Parameter]
+    public Dictionary<string, double> line {get; set;}
+    public static string[] labels { get; set; }
+    public static double[] data { get; set; }
+    public bool initialized{get; set;} = false;
+
+    public ChartSeries cs {get; set;} = new();
+    public List<ChartSeries> Series =new();
+    public string[] XAxisLabels {get; set;}
+
+    protected override async Task OnInitializedAsync(){
+
+        await Task.Run(() => InitializeData());
+        cs.Name = "Money";
+        cs.Data = data;
+        Series.Add(cs);
+        XAxisLabels=labels;
+        initialized = true;
+    }
+
+    public void InitializeData(){
+        labels = new string[line.Count()];
+        data = new double[line.Count()];
+        int i = 0;
+        foreach (string k in line.Keys){
+            labels[i] = k;
+            data[i] = line[k];
+            i++;
+        }
+            
+    }
+
+}

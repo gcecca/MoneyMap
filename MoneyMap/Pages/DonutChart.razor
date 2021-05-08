@@ -1,10 +1,19 @@
 ﻿@page "/DonutChart"
 @using MudBlazor 
 
-@if(!initialized){
+@if(pieDictionary is null){
     <p>loading...</p>
 }
 else {
+        string[] labels = new string[pieDictionary.Count()];
+        double[] data = new double[pieDictionary.Count()];
+        int i = 0;
+        foreach (string k in pieDictionary.Keys){
+            labels[i] = k;
+            data[i] = pieDictionary[k];
+            i++;
+
+    }
     <MudPaper Class="pa-4">
         <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px" InputData="@data" InputLabels="@labels"></MudChart>
     </MudPaper>
@@ -15,25 +24,5 @@ else {
 
     [Parameter]
     public Dictionary<string, double> pieDictionary{get; set;}
-
-    public string[] labels { get; set; }
-    public double[] data { get; set; }
-    public bool initialized{get; set;} = false;
-
-    protected override async Task OnInitializedAsync(){
-        await Task.Run(() => InitializeData());
-    }
-
-    public void InitializeData(){
-        labels = new string[pieDictionary.Count()];
-        data = new double[pieDictionary.Count()];
-        int i = 0;
-        foreach (string k in pieDictionary.Keys){
-            labels[i] = k;
-            data[i] = pieDictionary[k];
-            i++;
-        }
-        initialized = true;
-    }
 
 }

@@ -1,4 +1,6 @@
 ﻿@page "/"
+@page "/Home"
+
 @using MoneyMap.Data
 @using MudBlazor
 @inject Cash_Flow_Service CFS
@@ -12,7 +14,9 @@
 
 }
 else
-{   <div class="col-md-4">
+{   
+
+    <div class="col-md-4">
         <MudCard>
             <MudCardContent>
                 <MudSelect T="string" Label="Category" @bind-Value=@catProperty>

@@ -1,0 +1,135 @@
+@page "/Dashboard"
+@using MudBlazor
+@using MoneyMap.Data
+@inject Cash_Flow_Service CFS
+@inject Net_Worth_Service NWS
+
+@if(maxByMonth is null){
+
+
+}
+
+else{
+<div class="col-md-4">
+        <MudCard>
+            <MudCardContent>
+                <MudSelect T="string" Label="Category" @bind-Value=@catProperty>
+                    <MudSelectItem Value="@("All")" />
+                        @foreach (var c in Categories)
+                        {
+                            <MudSelectItem Value="@c" />
+                        }
+                </MudSelect>
+
+                <MudSelect T="int" Label="Month" @bind-Value=@monthProperty>
+                    <MudSelectItem Value="0" > All </MudSelectItem>
+                        @foreach (var m in Months)
+                        {
+                            <MudSelectItem Value="@m" />
+                        }
+                </MudSelect>
+            </MudCardContent>
+        </MudCard>    
+    </div>
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Income @filteredFlow.FindAll( l => l.movement>0).Sum(l=>l.movement)</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <DonutChart pieDictionary=@inflows></DonutChart>
+            </MudCardContent>
+        </MudCard>
+        
+    </div>
+    <div class="col-md-4">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Expenses @filteredFlow.FindAll( l => l.movement<0).Sum(l=>Math.Abs(l.movement)) </MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <DonutChart pieDictionary=@outFlows></DonutChart>
+            </MudCardContent>
+        </MudCard>
+
+    </div> 
+</div>
+
+    
+
+
+
+    @* <LineChart line=@maxByMonth></LineChart> *@
+}
+
+@code{
+
+
+    public List<Cash_Flow> flow {get; set;}
+    public List<Cash_Flow> filteredFlow{get; set;}
+    public List<Net_Worth> netWorths {get; set;}
+    public Dictionary<string, double> inflows {get; set;}
+    public Dictionary<string, double> outFlows {get; set;}
+    public Dictionary<string, double> maxByMonth{get; set;}
+    public HashSet<String> Categories = new();
+    public HashSet<int> Months = new();
+
+
+    private int month{get;set;} = 0;
+    public int monthProperty{
+        get{
+            return month;
+        }
+        set{
+            month = value;
+            ApplyFilters();
+        }
+    }
+    private string category{get; set;} = "All";
+    public string catProperty{
+        get{
+            return category;
+        }
+        set{
+            category = value;
+            ApplyFilters();
+        }
+    }
+
+    protected override async Task OnInitializedAsync(){
+
+        flow = await Task.Run(() => CFS.GetCashFlow());
+        filteredFlow = flow;
+        foreach(Cash_Flow c in flow){
+            Categories.Add(c.description);
+            Months.Add(c.movement_date.Month);
+        }
+        netWorths = await Task.Run(()=>NWS.GetMoneyMap());
+        inflows = await Task.Run(() => CFS.GetInflows(filteredFlow));
+        outFlows = await Task.Run(() => CFS.GetOutflows(filteredFlow));
+        maxByMonth = await Task.Run(()=> NWS.GetMaxByMonth(netWorths));
+
+
+    }
+
+    public void ApplyFilters(){
+        filteredFlow = flow;
+        if(category != "All")
+            filteredFlow = filteredFlow.FindAll(c => c.description.Equals(catProperty));
+
+        if(monthProperty != 0)
+            filteredFlow = filteredFlow.FindAll(c => c.movement_date.Month == monthProperty);
+
+        inflows =CFS.GetInflows(filteredFlow);
+        outFlows=CFS.GetOutflows(filteredFlow);
+    }
+
+}
