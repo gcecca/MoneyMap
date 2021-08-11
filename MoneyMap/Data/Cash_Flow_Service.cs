@@ -71,5 +71,23 @@ namespace MoneyMap.Data{
 
             return inFlows;
         }
+
+        public double GetMonthlyAverage ( string category){
+
+            float totalSpending = 0;
+            DateTime startDate = new();
+            DateTime endDate = new();
+            List<Cash_Flow> allFlows = this.GetCashFlow();
+            foreach (Cash_Flow c in allFlows){
+                if (c.description.Equals(category))
+                totalSpending += c.movement;
+            }     
+            
+            startDate =allFlows.Min( c => c.movement_date);
+            endDate = allFlows.Max(c => c.movement_date);
+
+            return 
+                totalSpending / (endDate.Subtract(startDate).TotalDays) * 30;
+        }
     }
 }

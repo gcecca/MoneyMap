@@ -6,7 +6,7 @@
 
 @if(c is null){<p><em>Loading...</em></p>}
 else{
-    <h2>Edit Transaction</h2>
+    
     @if(result == 0){
         <div class="text-success">
             Changes Saved
@@ -17,39 +17,46 @@ else{
             Update failed
         </div>
     }
-    <EditForm Model=@c OnInvalidSubmit =@InvalidFormSubmitted OnValidSubmit=@ValidFormSubmitted>
-        <DataAnnotationsValidator/>
-        <ValidationSummary/>
-        <div class="row">
-            <div class=" col-md-4">
-                <MudCard>
-                    <MudCardContent>
-                        <div class=" form-group">
-                            <label for="movement_date" class="control-label">Date</label>
-                            <input for="movement_date" class="form-control" @bind=c.movement_date />
-                        </div>
-                        <div class=" form-group">
-                            <label for="movement" class="control-label">Movement</label>
-                            <input for="movement" class="form-control" @bind=c.movement />
-                        </div>
-                        <div class=" form-group">
-                            <label for="description" class="control-label">Description</label>
-                            <input for="description" class="form-control" @bind=c.description />
-                        </div>
-                        <div class=" form-group">
-                            <label for="dd" class="control-label">Details</label>
-                            <input for="dd" class="form-control" @bind=c.detailed_description />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-primary" value="Save">
-                            <input type="button" class="btn btn-primary" value="Back" @onclick="Cancel">
-                        </div>
-                    </MudCardContent>   
-                </MudCard>    
+    <MudContainer>
+        <EditForm Model=@c OnInvalidSubmit =@InvalidFormSubmitted OnValidSubmit=@ValidFormSubmitted>
+            <DataAnnotationsValidator/>
+            <ValidationSummary/>
+            <div class="row">
+                <div class=" col-md-4">
+                    <MudCard>
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <h2>Edit Transaction</h2>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <div class=" form-group">
+                                <label for="movement_date" class="control-label">Date</label>
+                                <input for="movement_date" class="form-control" @bind=c.movement_date />
+                            </div>
+                            <div class=" form-group">
+                                <label for="movement" class="control-label">Movement</label>
+                                <input for="movement" class="form-control" @bind=c.movement />
+                            </div>
+                            <div class=" form-group">
+                                <label for="description" class="control-label">Description</label>
+                                <input for="description" class="form-control" @bind=c.description />
+                            </div>
+                            <div class=" form-group">
+                                <label for="dd" class="control-label">Details</label>
+                                <input for="dd" class="form-control" @bind=c.detailed_description />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary" value="Save">
+                                <input type="button" class="btn btn-primary" value="Back" @onclick="Cancel">
+                            </div>
+                        </MudCardContent>   
+                    </MudCard>    
+                </div>
             </div>
-        </div>
-                    
-    </EditForm>
+                        
+        </EditForm>
+    </MudContainer>
 }
 @code{
     [Parameter]

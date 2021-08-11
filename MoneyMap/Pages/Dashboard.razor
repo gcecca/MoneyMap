@@ -10,59 +10,60 @@
 }
 
 else{
-<div class="col-md-4">
-        <MudCard>
-            <MudCardContent>
-                <MudSelect T="string" Label="Category" @bind-Value=@catProperty>
-                    <MudSelectItem Value="@("All")" />
-                        @foreach (var c in Categories)
-                        {
-                            <MudSelectItem Value="@c" />
-                        }
-                </MudSelect>
+    <MudContainer>
+        <div class="col-md-4">
+            <MudCard>
+                <MudCardContent>
+                    <MudSelect T="string" Label="Category" @bind-Value=@catProperty>
+                        <MudSelectItem Value="@("All")" />
+                            @foreach (var c in Categories)
+                            {
+                                <MudSelectItem Value="@c" />
+                            }
+                    </MudSelect>
 
-                <MudSelect T="int" Label="Month" @bind-Value=@monthProperty>
-                    <MudSelectItem Value="0" > All </MudSelectItem>
-                        @foreach (var m in Months)
-                        {
-                            <MudSelectItem Value="@m" />
-                        }
-                </MudSelect>
-            </MudCardContent>
-        </MudCard>    
-    </div>
+                    <MudSelect T="int" Label="Month" @bind-Value=@monthProperty>
+                        <MudSelectItem Value="0" > All </MudSelectItem>
+                            @foreach (var m in Months)
+                            {
+                                <MudSelectItem Value="@m" />
+                            }
+                    </MudSelect>
+                </MudCardContent>
+            </MudCard>    
+        </div>
 
+        <div style="min-height:25px"/>
 
+        <div class="row">
+            <div class="col-md-4">
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">Income @filteredFlow.FindAll( l => l.movement>0).Sum(l=>l.movement)</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <DonutChart pieDictionary=@inflows></DonutChart>
+                    </MudCardContent>
+                </MudCard>
+                
+            </div>
+            <div class="col-md-4">
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">Expenses @filteredFlow.FindAll( l => l.movement<0).Sum(l=>Math.Abs(l.movement)) </MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <DonutChart pieDictionary=@outFlows></DonutChart>
+                    </MudCardContent>
+                </MudCard>
 
-<div class="row">
-    <div class="col-md-4">
-        <MudCard>
-            <MudCardHeader>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.h6">Income @filteredFlow.FindAll( l => l.movement>0).Sum(l=>l.movement)</MudText>
-                </CardHeaderContent>
-            </MudCardHeader>
-            <MudCardContent>
-                <DonutChart pieDictionary=@inflows></DonutChart>
-            </MudCardContent>
-        </MudCard>
-        
-    </div>
-    <div class="col-md-4">
-        <MudCard>
-            <MudCardHeader>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.h6">Expenses @filteredFlow.FindAll( l => l.movement<0).Sum(l=>Math.Abs(l.movement)) </MudText>
-                </CardHeaderContent>
-            </MudCardHeader>
-            <MudCardContent>
-                <DonutChart pieDictionary=@outFlows></DonutChart>
-            </MudCardContent>
-        </MudCard>
-
-    </div> 
-</div>
-
+            </div> 
+        </div>
+    </MudContainer>
     
 
 
@@ -112,7 +113,7 @@ else{
             Categories.Add(c.description);
             Months.Add(c.movement_date.Month);
         }
-        netWorths = await Task.Run(()=>NWS.GetMoneyMap());
+        netWorths = await Task.Run(() => NWS.GetMoneyMap());
         inflows = await Task.Run(() => CFS.GetInflows(filteredFlow));
         outFlows = await Task.Run(() => CFS.GetOutflows(filteredFlow));
         maxByMonth = await Task.Run(()=> NWS.GetMaxByMonth(netWorths));

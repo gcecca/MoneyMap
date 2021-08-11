@@ -1,10 +1,9 @@
 @page "/Net_Worth_Add"
 @using MoneyMap.Data;
-@using MudBlazor
+@using MudBlazor;
 @inject NavigationManager NM;
 @inject Net_Worth_Service NWS
 
-<h2>Add Net Worth</h2>
 
     @if(result == 0){
         <div class="text-success">
@@ -16,33 +15,39 @@
             Update failed
         </div>
     }
+<MudContainer>
+    <EditForm Model=@nw OnInvalidSubmit =@InvalidFormSubmitted OnValidSubmit=@ValidFormSubmitted>
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
+        <div class="row">
+            <div class=" col-md-4">
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <h2>Add Net Worth</h2>
 
-<EditForm Model=@nw OnInvalidSubmit =@InvalidFormSubmitted OnValidSubmit=@ValidFormSubmitted>
-    <DataAnnotationsValidator/>
-    <ValidationSummary/>
-    <div class="row">
-        <div class=" col-md-4">
-            <MudCard>
-                <MudCardContent>
-                    <div class=" form-group">
-                        <label for="date" class="control-label">Date</label>
-                        <input for="date" class="form-control" @bind=nw.value_date />
-                    </div>
-                    <div class=" form-group">
-                        <label for="net worth" class="control-label">Net Worth</label>
-                        <input for="net worth" class="form-control" @bind=nw.money/>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Save">
-                        <input type="button" class="btn btn-primary" value="Back" @onclick="Cancel">
-                    </div>
-                </MudCardContent>
-            </MudCard>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <div class=" form-group">
+                            <label for="date" class="control-label">Date</label>
+                            <input for="date" class="form-control" @bind=nw.value_date />
+                        </div>
+                        <div class=" form-group">
+                            <label for="net worth" class="control-label">Net Worth</label>
+                            <input for="net worth" class="form-control" @bind=nw.money/>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="Save">
+                            <input type="button" class="btn btn-primary" value="Back" @onclick="Cancel">
+                        </div>
+                    </MudCardContent>
+                </MudCard>
+            </div>
         </div>
-    </div>
-                
-</EditForm>
-
+                    
+    </EditForm>
+</MudContainer>
 @code{
     public Net_Worth nw = new();
     public int result{get; set;} = 99;

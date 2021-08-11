@@ -2,27 +2,31 @@
 @using MoneyMap.Data;
 @using MudBlazor;
 @inject NavigationManager NM;
-@inject Cash_Flow_Service CFS
+@inject Cash_Flow_Service CFS;
 
-<h2>Add Transaction</h2>
-    @if(result == 0){
-        <div class="text-success">
-            Changes Saved
-        </div>
-    }
-    @if(result != 0 && result != 99){
-        <div class="text-danger">
-            Update failed
-        </div>
-    }
-
-<EditForm Model=@cf OnInvalidSubmit =@InvalidFormSubmitted OnValidSubmit=@ValidFormSubmitted>
+@if(result == 0){
+    <div class="text-success">
+        Changes Saved
+    </div>
+}
+@if(result != 0 && result != 99){
+    <div class="text-danger">
+        Update failed
+    </div>
+}
+<EditForm Model=@cf OnInvalidSubmit=@InvalidFormSubmitted OnValidSubmit=@ValidFormSubmitted>
     <DataAnnotationsValidator/>
     <ValidationSummary/>
 
         <div class="row">
             <div class=" col-md-4">
                 <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <h2>Add Transaction</h2>
+
+                        </CardHeaderContent>
+                    </MudCardHeader>
                     <MudCardContent>
                         <div class=" form-group">
                             <label for="movement_date" class="control-label">Date</label>
@@ -48,8 +52,6 @@
                 </MudCard>    
             </div>
         </div>
-
-    
 </EditForm>
 
 @code{

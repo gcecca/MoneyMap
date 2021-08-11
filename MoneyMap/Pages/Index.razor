@@ -15,55 +15,61 @@
 }
 else
 {   
+    <MudContainer>
+        <div class="col-md-4">
+            <MudCard>
+                <MudCardContent>
+                    <MudSelect T="string" Label="Category" @bind-Value=@catProperty>
+                        <MudSelectItem Value="@("All")" />
+                            @foreach (var c in Categories)
+                            {
+                                <MudSelectItem Value="@c" />
+                            }
+                    </MudSelect>
 
-    <div class="col-md-4">
-        <MudCard>
-            <MudCardContent>
-                <MudSelect T="string" Label="Category" @bind-Value=@catProperty>
-                    <MudSelectItem Value="@("All")" />
-                        @foreach (var c in Categories)
-                        {
-                            <MudSelectItem Value="@c" />
+                    <MudSelect T="int" Label="Month" @bind-Value=@monthProperty>
+                        <MudSelectItem Value="0" > All </MudSelectItem>
+                            @foreach (var m in Months)
+                            {
+                                <MudSelectItem Value="@m" />
+                            }
+                    </MudSelect>
+                </MudCardContent>
+            </MudCard>    
+        </div>
+        <div style ="min-height:25px"/>
+        <div class="justify-content-center">
+            <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" Style="overflow:scroll">
+                <MudTabPanel Text="Transactions">
+                    <FlowTable cash_flows="@cFlow"/>
+
+                </MudTabPanel>
+                <MudTabPanel Text="By Category">
+
+                    <FlowByCategoryTable expensesByCategory="@inMap"/>
+                    
+                </MudTabPanel>
+                <MudTabPanel Text="Flow">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <MoneyCard value=@cFlow.FindAll(c => c.movement > 0).Sum(c => c.movement) title="Income" text ="Total Income" />
+                        </div>
+                        <div class="col-md-2">
+                            <MoneyCard value=@cFlow.FindAll(c => c.movement < 0).Sum(c => c.movement) title="Expenses" text ="Total Expenses" />
+                        </div>
+                        <div class="col-md-2">
+                            <MoneyCard value=@cFlow.Sum(c=>c.movement) title="Savings" text="Your total savings" />
+                        </div>
+                        @if(!catProperty.Equals("All")){
+                            <div class="col-md-2">
+                                <MoneyCard value=@((float)CFS.GetMonthlyAverage(catProperty)) title="@(catProperty + " Average")" text="Monthly average" />
+                            </div>                        
                         }
-                </MudSelect>
-
-                <MudSelect T="int" Label="Month" @bind-Value=@monthProperty>
-                    <MudSelectItem Value="0" > All </MudSelectItem>
-                        @foreach (var m in Months)
-                        {
-                            <MudSelectItem Value="@m" />
-                        }
-                </MudSelect>
-            </MudCardContent>
-        </MudCard>    
-    </div>
-    <div style ="min-height:25px"/>
-    <div class="justify-content-center">
-        <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" Style="overflow:scroll">
-            <MudTabPanel Text="Transactions">
-                <FlowTable cash_flows="@cFlow"/>
-
-            </MudTabPanel>
-            <MudTabPanel Text="By Category">
-
-                <FlowByCategoryTable expensesByCategory="@inMap"/>
-                
-            </MudTabPanel>
-            <MudTabPanel Text="Flow">
-                <div class="row">
-                    <div class="col-md-2">
-                        <MoneyCard value=@cFlow.FindAll(c => c.movement > 0).Sum(c => c.movement) title="Income" text ="Total Income" />
                     </div>
-                    <div class="col-md-2">
-                        <MoneyCard value=@cFlow.FindAll(c => c.movement < 0).Sum(c => c.movement) title="Expenses" text ="Total Expenses" />
-                    </div>
-                    <div class="col-md-2">
-                        <MoneyCard value=@cFlow.Sum(c=>c.movement) title="Savings" text="Your total savings" />
-                    </div>
-                </div>
-            </MudTabPanel>
-        </MudTabs>
-    </div>
+                </MudTabPanel>
+            </MudTabs>
+        </div>
+    </MudContainer>
 }
 
 @code{
